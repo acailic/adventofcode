@@ -1,10 +1,11 @@
 package aoc;
 
+
 /**
  * An abstract class that represents a solution to an Advent of Code puzzle.
  */
 public abstract class AbstractPuzzle {
-    private final String _puzzleInput;
+    protected final String _puzzleInput;
 
     /**
      * Constructor which accepts the puzzle input to be solved.

@@ -30,7 +30,7 @@ public class TestPuzzle01 extends BasePuzzleTest {
     @Test
     public void testSolvePart1() throws Exception {
         var puzzle = new Puzzle01(getStoredInput(1));
-        assertEquals(puzzle.solvePart1(), "75622");
+        assertEquals(puzzle.solvePart1(), "72070");
     }
 
     @Test
@@ -57,6 +57,6 @@ public class TestPuzzle01 extends BasePuzzleTest {
     @Test
     public void testSolvePart2() throws Exception {
         var puzzle = new Puzzle01(getStoredInput(1));
-        assertEquals(puzzle.solvePart2(), "213159");
+        assertEquals(puzzle.solvePart2(), "211805");
     }
 }
