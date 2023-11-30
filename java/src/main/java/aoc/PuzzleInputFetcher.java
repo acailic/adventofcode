@@ -2,25 +2,23 @@ package aoc;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.net.HttpHeaders;
-import com.microsoft.z3.Log;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Fetches puzzle inputs using an in-memory cache, the local disk, or the Advent of Code site.
  */
+@Slf4j
 public class PuzzleInputFetcher {
-    private static final Logger LOG = LoggerFactory.getLogger(PuzzleInputFetcher.class);
     public static final String PUZZLE = "puzzle";
     public static final String URL = "https://adventofcode.com/";
 
@@ -54,26 +52,26 @@ public class PuzzleInputFetcher {
         return _cache.computeIfAbsent(getKey(year, day), s -> {
             try {
                 try {
-                    LOG.info("Fetching puzzle input from local store for day {}", day);
+                    log.info("Fetching puzzle input from local store for day {}", day);
                     return fetchLocalPuzzleInput(year,day);
                 } catch (IOException e) {
-                    LOG.warn("Unable to fetch puzzle input from local store for year {} day {}",year, day, e);
+                    log.warn("Unable to fetch puzzle input from local store for year {} day {}",year, day, e);
                 }
 
                 String input;
                 try {
-                    LOG.info("Fetching puzzle input from remote store for day {}", day);
+                    log.info("Fetching puzzle input from remote store for day {}", day);
                     input = fetchRemotePuzzleInput(year,day);
                 } catch (IOException e) {
-                    LOG.error("Unable to fetch puzzle input from remote store for year {}  day {}",year, day, e);
+                    log.error("Unable to fetch puzzle input from remote store for year {}  day {}",year, day, e);
                     throw e;
                 }
 
                 try {
-                    LOG.info("Storing puzzle input locally for day {}", day);
+                    log.info("Storing puzzle input locally for day {}", day);
                     storePuzzleInputLocally(year, day, input);
                 } catch (IOException e) {
-                    LOG.warn("Unable to store puzzle input locally for year {}  day {}",year, day, e);
+                    log.warn("Unable to store puzzle input locally for year {}  day {}",year, day, e);
                 }
                 return input;
             } catch (IOException e) {
@@ -90,23 +88,28 @@ public class PuzzleInputFetcher {
 
     @VisibleForTesting
     String fetchLocalPuzzleInput(int year, int day) throws IOException {
-        LOG.info("Fetching puzzle input from disk for day {} year {}", day , year);
-        return Files.readString(_puzzleStorePath.resolve(getKey(year, day)));
+        log.info("Fetching puzzle input from disk for day {} year {}", day , year);
+        return Files.readString(_puzzleStorePath.resolve(getDayInput(day)));
     }
 
     @VisibleForTesting
     void storePuzzleInputLocally(int year, int day, String puzzleInput) throws IOException {
-        LOG.info("Storing puzzle input on disk for day {}", day);
+        log.info("Storing puzzle input on disk for day {}", day);
         Files.createDirectories(_puzzleStorePath);
-        var path = _puzzleStorePath.resolve(getKey(year, day));
+        var path = _puzzleStorePath.resolve(getDayInput(day));
         Files.writeString(path, puzzleInput);
+    }
+
+    @NotNull
+    private static String getDayInput(int day) {
+        return day + "/input.txt";
     }
 
     @VisibleForTesting
     String fetchRemotePuzzleInput(int year,int day) throws IOException {
-        LOG.info("Fetching puzzle input from Advent of Code for year {} day {} ", year, day);
+        log.info("Fetching puzzle input from Advent of Code for year {} day {} ", year, day);
         HttpUrl remotePuzzleInputUrl = getRemotePuzzleInputUrl(year, day);
-        LOG.info("Fetching url {}", remotePuzzleInputUrl);
+        log.info("Fetching url {}", remotePuzzleInputUrl);
         var request = new Request.Builder()
                 .url(remotePuzzleInputUrl)
                 .header(HttpHeaders.COOKIE, "session=" + getSessionToken())

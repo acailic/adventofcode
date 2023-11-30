@@ -6,7 +6,6 @@ import java.util.PriorityQueue;
 
 
 @Slf4j
-
 public class Puzzle01 extends AbstractPuzzle {
     /**
      * Constructor which accepts the puzzle input to be solved.
