@@ -1,9 +1,12 @@
 package aoc;
 
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * An abstract class that represents a solution to an Advent of Code puzzle.
  */
+@Slf4j
 public abstract class AbstractPuzzle {
     protected final String _puzzleInput;
 
