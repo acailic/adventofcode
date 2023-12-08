@@ -1,4 +1,4 @@
-package tw23;
+package models;
 
 
 import lombok.Data;

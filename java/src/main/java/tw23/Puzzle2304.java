@@ -2,6 +2,7 @@ package tw23;
 
 import aoc.AbstractPuzzle;
 import lombok.extern.slf4j.Slf4j;
+import util.StringUtilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;

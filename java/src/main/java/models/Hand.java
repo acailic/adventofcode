@@ -1,4 +1,4 @@
-package tw23;
+package models;
 
 import com.google.common.base.Joiner;
 import lombok.AllArgsConstructor;
