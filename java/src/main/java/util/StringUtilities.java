@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class StringUtilities {
@@ -39,6 +40,11 @@ public class StringUtilities {
     public static String removeStartChunk(final String target, final String chunk) {
         return getStringChunk(target, chunk.length(), target.length() - chunk.length());
     }
+
+    public static List<Integer> ints(String s) {
+        return Regex.matchAll("\\d+", s).stream().map(Integer::parseInt).collect(Collectors.toList());
+    }
+
     public static String objectToString(final Object object) {
         try {
             return OBJECT_MAPPER.writeValueAsString(object);

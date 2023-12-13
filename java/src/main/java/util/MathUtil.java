@@ -16,6 +16,8 @@ public class MathUtil {
         return result;
     }
 
+
+
     public static long lcm(Collection<Long> numbers) {
         return lcm(List.copyOf(numbers));
     }

@@ -9,7 +9,7 @@ public class BasePuzzleTest {
 
     public String getStoredInput(int day) throws Exception {
         int year = 2023;
-        var puzzleInputResource = Resources.getResource("puzzle/"+ year+"/0"+ day+ "/" + FILE_NAME);
+        var puzzleInputResource = Resources.getResource("puzzle/"+ year+"/"+ day+ "/" + FILE_NAME);
         return Files.readString(Path.of(puzzleInputResource.toURI()));
     }
 }
