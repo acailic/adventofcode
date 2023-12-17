@@ -5,6 +5,7 @@ package models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import util.Direction;
 
 
 @AllArgsConstructor
@@ -35,6 +36,49 @@ public class Point {
 
     public Point west() {
         return new Point(x - 1, y);
+    }
+
+    public Point leftFromDirection(Direction direction) {
+        return switch (direction) {
+            case U -> left();
+            case D -> right();
+            case L -> down();
+            case R -> up();
+        };
+    }
+
+    public Point rightFromDirection(Direction direction) {
+        return switch (direction) {
+            case U -> right();
+            case D -> left();
+            case L -> up();
+            case R -> down();
+        };
+    }
+
+    public Point forwardFromDirection(Direction direction) {
+        return switch (direction) {
+            case U -> up();
+            case D -> down();
+            case L -> left();
+            case R -> right();
+        };
+    }
+
+    public Point right() {
+        return new Point(x + 1, y);
+    }
+
+    public Point left() {
+        return new Point(x - 1, y);
+    }
+
+    public Point up() {
+        return new Point(x, y - 1);
+    }
+
+    public Point down() {
+        return new Point(x, y + 1);
     }
 
 }
