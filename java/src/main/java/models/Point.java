@@ -21,4 +21,20 @@ public class Point {
         return new Point(this.x+other.x, this.y+other.y);
     }
 
+    public Point north() {
+        return new Point(x, y - 1);
+    }
+
+    public Point east() {
+        return new Point(x + 1, y);
+    }
+
+    public Point south() {
+        return new Point(x, y + 1);
+    }
+
+    public Point west() {
+        return new Point(x - 1, y);
+    }
+
 }

@@ -3,12 +3,13 @@ package tw23;
 import aoc.AbstractPuzzle;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Triple;
-import util.StringUtilities;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static util.StringUtilities.ints;
 
 @Slf4j
 public class Puzzle2312 extends AbstractPuzzle {
@@ -30,7 +31,7 @@ public class Puzzle2312 extends AbstractPuzzle {
             log.info("line: {}", line);
             var parts = line.split(" ");
             var springLine = parts[0].chars().mapToObj(Character::toString).collect(Collectors.joining());
-            var numbers = StringUtilities.ints(parts[1]);
+            var numbers = ints(parts[1]);
             sum += combinationsCount(springLine, numbers, false);
         }
         log.info("sum: {}", sum);
@@ -94,6 +95,21 @@ public class Puzzle2312 extends AbstractPuzzle {
 
     @Override
     public String solvePart2() {
-        return null;
+        var lines = getPuzzleInput().trim().split("\n");
+        var sum = 0L;
+
+        for (var line: lines) {
+            var parts = line.split(" ");
+            var springsLine = parts[0].chars().mapToObj(Character::toString).collect(Collectors.joining());
+            var numbers = ints(parts[1]);
+            var newSpringsLine = springsLine + ('?' + springsLine).repeat(4);
+            var newNumbers = new LinkedList<>(numbers){{
+                addAll(numbers); addAll(numbers); addAll(numbers); addAll(numbers);
+            }};
+
+            sum += combinationsCount(newSpringsLine, newNumbers, false);
+        }
+        log.info("sum: {}", sum);
+        return String.valueOf(sum);
     }
 }
